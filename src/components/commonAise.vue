@@ -15,7 +15,7 @@
         v-for="item in noChildren"
         :index="item.name"
         :key="item.name"
-        @click="$router.push(item.path)"
+        @click="changeMenu(item.path)"
       >
         <i :class="`el-icon-${item.icon}`"></i>
         <span slot="title">{{item.label}}</span>
@@ -26,7 +26,7 @@
           <span slot="title">{{item.label}}</span>
         </template>
         <el-menu-item-group v-for="page in item.children" :key="page.name">
-          <el-menu-item @click="$router.push(page.path)" :index="page.name">{{page.label}}</el-menu-item>
+          <el-menu-item @click="changeMenu(page.path)" :index="page.name">{{page.label}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -89,6 +89,13 @@ export default {
     },
     handleClose(key, keyPath) {
       // console.log(key, keyPath);
+    },
+    changeMenu(mune) {
+      if (this.$route.path !== mune) {
+        this.$router.push(mune);
+      } else {
+        return;
+      }
     }
   },
   computed: {
