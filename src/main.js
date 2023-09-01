@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Button, Row } from 'element-ui';
+import ElementUI from 'element-ui';
+// import { Button, Row } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router';
 
 Vue.config.productionTip = false
-// Vue.use(ElementUI)
-Vue.use(Row)
-Vue.use(Button)
+
+Vue.use(ElementUI)
+// Vue.use(Row)
+// Vue.use(Button)
 
 new Vue({
   router,
