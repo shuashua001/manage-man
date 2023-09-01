@@ -6,8 +6,15 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 
-<style></style>
+<style>
+html,
+body,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+</style>
