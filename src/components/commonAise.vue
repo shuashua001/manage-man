@@ -11,7 +11,12 @@
       active-text-color="#ffd04b"
     >
       <h3>通用后台管理系统</h3>
-      <el-menu-item v-for="item in noChildren" :index="item.name" :key="item.name">
+      <el-menu-item
+        v-for="item in noChildren"
+        :index="item.name"
+        :key="item.name"
+        @click="$router.push(item.path)"
+      >
         <i :class="`el-icon-${item.icon}`"></i>
         <span slot="title">{{item.label}}</span>
       </el-menu-item>
@@ -21,7 +26,7 @@
           <span slot="title">{{item.label}}</span>
         </template>
         <el-menu-item-group v-for="page in item.children" :key="page.name">
-          <el-menu-item :index="page.name">{{page.label}}</el-menu-item>
+          <el-menu-item @click="$router.push(page.path)" :index="page.name">{{page.label}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -80,10 +85,10 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     }
   },
   computed: {
@@ -103,6 +108,7 @@ export default {
   min-height: 400px;
 }
 .el-menu {
+  border-right: none;
   height: 100vh;
   h3 {
     color: #fff;
