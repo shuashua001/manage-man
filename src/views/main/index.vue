@@ -5,7 +5,9 @@
         <CommonAsie />
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <commonHeader />
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -16,13 +18,18 @@
 
 <script>
 import CommonAsie from "../../components/commonAise.vue";
+import CommonHeader from "../../components/commonHeader.vue";
 
 export default {
   components: {
-    CommonAsie
+    CommonAsie,
+    CommonHeader
   }
 };
 </script>
 
 <style>
+.el-header {
+  padding: 0;
+}
 </style>
