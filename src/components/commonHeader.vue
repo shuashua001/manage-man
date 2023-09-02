@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <div class="l-head">
-      <el-button icon="el-icon-menu" size="mini"></el-button>
+      <el-button @click="changeAside()" icon="el-icon-menu" size="mini"></el-button>
       <span class="bread">首页</span>
     </div>
     <div class="r-head">
@@ -19,7 +19,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    changeAside() {
+      this.$store.commit("changeCollapse");
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

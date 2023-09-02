@@ -5,7 +5,7 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-      :collapse="isCollapse"
+      :collapse="doCollapse"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
@@ -37,7 +37,6 @@
 export default {
   data() {
     return {
-      isCollapse: false,
       menuData: [
         {
           path: "/",
@@ -104,6 +103,9 @@ export default {
     },
     noChildren() {
       return this.menuData.filter(item => !item.children);
+    },
+    doCollapse() {
+      return this.$store.state.asideFold.isCollapse;
     }
   }
 };

@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-aside width="200px">
-        <CommonAsie />
+        <CommonAside />
       </el-aside>
       <el-container>
         <el-header>
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import CommonAsie from "../../components/commonAise.vue";
+import CommonAside from "../../components/commonAside.vue";
 import CommonHeader from "../../components/commonHeader.vue";
 
 export default {
   components: {
-    CommonAsie,
+    CommonAside,
     CommonHeader
   }
 };
