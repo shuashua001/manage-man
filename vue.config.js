@@ -6,7 +6,7 @@ function resolve(dir) {
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,  //关闭eslint语法
-  configurewebpack: {    
+  configureWebpack: {    
     resolve: {      
       alias: {        
         '@': resolve('src'),      
