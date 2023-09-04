@@ -6,7 +6,7 @@
         <Purchased />
       </el-col>
       <el-col :span="16">
-        <div class="grid-content bg-purple-light"></div>
+        <Order />
       </el-col>
     </el-row>
   </div>
@@ -15,11 +15,13 @@
 <script>
 import Userinfo from "./components/userinfo.vue";
 import Purchased from "./components/purchased.vue";
+import Order from "./components/order.vue";
 
 export default {
   components: {
     Userinfo,
-    Purchased
+    Purchased,
+    Order
   }
 };
 </script>
