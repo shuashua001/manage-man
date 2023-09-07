@@ -7,6 +7,11 @@
       </el-col>
       <el-col :span="16" style="padding-left: 10px">
         <Order />
+        <el-card style="height: 280px"></el-card>
+        <div class="graph">
+          <el-card style="height: 260px"></el-card>
+          <el-card style="height: 260px"></el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -16,7 +21,6 @@
 import Userinfo from "./components/userinfo.vue";
 import Purchased from "./components/purchased.vue";
 import Order from "./components/order.vue";
-import { getHomeData } from "../../api/homeAPI";
 
 export default {
   components: {
@@ -25,12 +29,18 @@ export default {
     Order
   },
   mounted() {
-    getHomeData().then(res => {
-      console.log(res);
-    });
+    this.$store.dispatch("getHomeData");
   }
 };
 </script>
 
 <style lang="less" scoped>
+.graph {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  .el-card {
+    width: 48%;
+  }
+}
 </style>
