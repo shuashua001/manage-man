@@ -2,12 +2,12 @@ import { getHomeDataApi } from "@/api/homeAPI";
 
 export default{
   state: {
-    homeData: {}
+    homeData: {str:1}
   },
   mutations: {
     changeHomeData(state,res) {
       state.homeData = res.data.data
-      // console.log(res);
+      // console.log(state.homeData);
     }
   },
   actions: {

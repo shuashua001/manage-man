@@ -2,7 +2,13 @@
   <div class="header-container">
     <div class="l-head">
       <el-button @click="changeAside()" icon="el-icon-menu" size="mini"></el-button>
-      <span class="bread">首页</span>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item
+          v-for="item in tab"
+          :key="item.name"
+          :to="{ path: item.path }"
+        >{{ item.label }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
     <div class="r-head">
       <el-dropdown>
@@ -23,6 +29,11 @@ export default {
   methods: {
     changeAside() {
       this.$store.commit("changeCollapse");
+    }
+  },
+  computed: {
+    tab() {
+      return this.$store.state.asideFold.tabList;
     }
   }
 };

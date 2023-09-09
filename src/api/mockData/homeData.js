@@ -83,7 +83,7 @@ export default {
         ],
         orderData: {
           date:['20191001','20191002','20191003','20191004','20191005','20191006','20191007'],
-          date:list
+          data:list
         },
         tableData: [
           {

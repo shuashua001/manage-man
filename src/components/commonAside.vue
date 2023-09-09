@@ -15,7 +15,7 @@
         v-for="item in noChildren"
         :index="item.name"
         :key="item.name"
-        @click="changeMenu(item.path)"
+        @click="changeMenu(item)"
       >
         <i :class="`el-icon-${item.icon}`"></i>
         <span slot="title">{{item.label}}</span>
@@ -26,7 +26,7 @@
           <span slot="title">{{item.label}}</span>
         </template>
         <el-menu-item-group v-for="page in item.children" :key="page.name">
-          <el-menu-item @click="changeMenu(page.path)" :index="page.name">{{page.label}}</el-menu-item>
+          <el-menu-item @click="changeMenu(page)" :index="page.name">{{page.label}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -90,11 +90,13 @@ export default {
       // console.log(key, keyPath);
     },
     changeMenu(mune) {
-      if (this.$route.path !== mune) {
-        this.$router.push(mune);
+      console.log(mune);
+      if (this.$route.path !== mune.path) {
+        this.$router.push(mune.path);
       } else {
         return;
       }
+      this.$store.commit("changeTab", mune);
     }
   },
   computed: {
