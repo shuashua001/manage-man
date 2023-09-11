@@ -22,6 +22,10 @@ export default{
           state.tabList.push(mune)
         }
       }
+    },
+    deleteList(state,index) {
+      // console.log(data);
+      state.tabList.splice(index,1)
     }
   }
 }
