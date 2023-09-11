@@ -35,13 +35,19 @@ export default {
       return this.$store.state.home.homeData.orderData;
     }
   },
+  watch: {
+    getOrderData(newval, oldval) {
+      // console.log(newval, oldval);
+      this.writeLinear(newval);
+    }
+  },
   methods: {
-    writeLinear() {
+    writeLinear(orderData) {
       const linear = echarts.init(document.getElementById("linear"));
       const linearOption = {};
-      console.log(this.orderData);
+      // console.log(this.orderData);
 
-      const proName = Object.keys(this.orderData.data[0]);
+      const proName = Object.keys(orderData.data[0]);
       linearOption.xAxis = {
         data: proName
       };
@@ -62,7 +68,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getHomeData");
-    // this.writeLinear();
   }
 };
 </script>
