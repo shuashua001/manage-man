@@ -90,7 +90,7 @@ export default {
       // console.log(key, keyPath);
     },
     changeMenu(mune) {
-      console.log(mune);
+      // console.log(mune);
       if (this.$route.path !== mune.path) {
         this.$router.push(mune.path);
       } else {

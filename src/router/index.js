@@ -16,22 +16,27 @@ const router = new Router({
       children: [
         {
           path: '/',
+          name: 'home',
           component: Home
         },
         {
           path: '/user',
+          name: 'user',
           component: User
         },
         {
           path: '/mall',
+          name: 'mall',
           component: Mall
         },
         {
           path: '/page1',
+          name: 'page1',
           component: Page1
         },
         {
           path: '/page2',
+          name: 'page2',
           component: Page2
         },
       ]

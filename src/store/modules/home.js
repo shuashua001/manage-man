@@ -2,7 +2,7 @@ import { getHomeDataApi } from "@/api/homeAPI";
 
 export default{
   state: {
-    homeData: {str:1}
+    homeData: {}
   },
   mutations: {
     changeHomeData(state,res) {
