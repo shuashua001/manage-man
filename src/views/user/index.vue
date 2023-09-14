@@ -29,10 +29,25 @@
         <el-button type="primary" @click="submit()">确 定</el-button>
       </span>
     </el-dialog>
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="name" label="姓名"></el-table-column>
+      <el-table-column prop="age" label="年龄"></el-table-column>
+      <el-table-column prop="sex" label="性别"></el-table-column>
+      <el-table-column prop="birth" label="出生日期"></el-table-column>
+      <el-table-column prop="addr" label="地址"></el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button size="mini">编辑</el-button>
+          <el-button size="mini" type="danger">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
+import { getUserDataApi } from "../../api/homeAPI";
+
 export default {
   data() {
     return {
@@ -50,8 +65,14 @@ export default {
         sex: [{ required: true, message: "请选择性别" }],
         birth: [{ required: true, message: "请选择出生如期" }],
         addr: [{ required: true, message: "请填写地址" }]
-      }
+      },
+      tableData: []
     };
+  },
+  mounted() {
+    getUserDataApi().then(res => {
+      this.tableData = res.data.list;
+    });
   },
   methods: {
     submit() {
