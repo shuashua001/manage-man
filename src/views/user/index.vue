@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogVisible = true">+ 新增</el-button>
+    <el-button type="primary" @click="addBtn()">+ 新增</el-button>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
       <!-- 新增表单 -->
       <el-form ref="form" :model="form" :rules="rules" label-width="100px" :inline="true">
@@ -17,7 +17,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="出生日期" prop="birth">
-          <el-date-picker v-model="form.birth" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker
+            v-model="form.birth"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-DD"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="地址" prop="addr">
           <el-input v-model="form.addr" placeholder="请输入地址"></el-input>
@@ -32,13 +37,17 @@
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="sex" label="性别"></el-table-column>
+      <el-table-column prop="sex" label="性别">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sex == 0 ? '女':'男' }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="birth" label="出生日期"></el-table-column>
       <el-table-column prop="addr" label="地址"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini">编辑</el-button>
-          <el-button size="mini" type="danger">删除</el-button>
+          <el-button size="mini" @click="editData(scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="delData(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -46,7 +55,12 @@
 </template>
 
 <script>
-import { getUserDataApi } from "../../api/homeAPI";
+import {
+  getUserDataApi,
+  addUserApi,
+  delUserDataApi,
+  editUserDataApi
+} from "../../api/homeAPI";
 
 export default {
   data() {
@@ -66,20 +80,39 @@ export default {
         birth: [{ required: true, message: "请选择出生如期" }],
         addr: [{ required: true, message: "请填写地址" }]
       },
-      tableData: []
+      tableData: [],
+      modelType: 0
     };
   },
   mounted() {
-    getUserDataApi().then(res => {
-      this.tableData = res.data.list;
-    });
+    this.getList();
   },
   methods: {
+    addBtn() {
+      this.dialogVisible = true;
+      this.modelType = 0;
+    },
+    editData(data) {
+      this.dialogVisible = true;
+      this.modelType = 1;
+      this.form = JSON.parse(JSON.stringify(data));
+      // this.form = data;   错误写法
+    },
     submit() {
       // console.log(this.$refs.form);
       this.$refs.form.validate(success => {
         // console.log(success);
         if (success) {
+          if (this.modelType === 0) {
+            addUserApi(this.form).then(() => {
+              this.getList();
+            });
+          } else {
+            editUserDataApi(this.form).then(() => {
+              this.getList();
+            });
+          }
+
           this.dialogVisible = false;
           this.$refs.form.resetFields();
         }
@@ -91,6 +124,33 @@ export default {
     },
     handleClose() {
       this.cancel();
+    },
+    getList() {
+      getUserDataApi().then(res => {
+        this.tableData = res.data.list;
+      });
+    },
+    delData(id) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delUserDataApi({ id }).then(() => {
+            this.getList();
+          }),
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };
