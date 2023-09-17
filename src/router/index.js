@@ -6,6 +6,7 @@ import Main from "@/views/main/index.vue"
 import Mall from "@/views/mall/index.vue"
 import Page1 from "@/views/page/page1.vue"
 import Page2 from "@/views/page/page2.vue"
+import Login from '@/views/login/index.vue'
 
 Vue.use(Router)
 const router = new Router({
@@ -41,6 +42,10 @@ const router = new Router({
         },
       ]
     },
+    {
+      path:'/login',
+      component: Login
+    }
   ],
 })
 
