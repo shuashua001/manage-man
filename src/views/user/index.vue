@@ -1,6 +1,16 @@
 <template>
-  <div>
-    <el-button type="primary" @click="addBtn()">+ 新增</el-button>
+  <div class="user">
+    <div class="user-head">
+      <el-button type="primary" @click="addBtn()">+ 新增</el-button>
+      <el-form :model="searchData" :inline="true">
+        <el-form-item prop="name">
+          <el-input v-model="searchData.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="search">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
       <!-- 新增表单 -->
       <el-form ref="form" :model="form" :rules="rules" label-width="100px" :inline="true">
@@ -34,23 +44,28 @@
         <el-button type="primary" @click="submit()">确 定</el-button>
       </span>
     </el-dialog>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="sex" label="性别">
-        <template slot-scope="scope">
-          <span>{{ scope.row.sex == 0 ? '女':'男' }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="birth" label="出生日期"></el-table-column>
-      <el-table-column prop="addr" label="地址"></el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="editData(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="delData(scope.row.id)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="common-table">
+      <el-table :data="tableData" style="height: 90%" stripe>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="sex" label="性别">
+          <template slot-scope="scope">
+            <span>{{ scope.row.sex == 0 ? '女':'男' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="birth" label="出生日期"></el-table-column>
+        <el-table-column prop="addr" label="地址"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="editData(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="delData(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="pager">
+        <el-pagination layout="prev, pager, next" :total="total" @current-change="changePage"></el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,7 +96,15 @@ export default {
         addr: [{ required: true, message: "请填写地址" }]
       },
       tableData: [],
-      modelType: 0
+      modelType: 0,
+      pageData: {
+        page: 1,
+        limit: 10
+      },
+      total: 0,
+      searchData: {
+        name: ""
+      }
     };
   },
   mounted() {
@@ -126,8 +149,10 @@ export default {
       this.cancel();
     },
     getList() {
-      getUserDataApi().then(res => {
+      getUserDataApi({ ...this.searchData, ...this.pageData }).then(res => {
+        // console.log(res);
         this.tableData = res.data.list;
+        this.total = res.data.count;
       });
     },
     delData(id) {
@@ -151,10 +176,35 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    changePage(page) {
+      // console.log(page);
+      this.pageData.page = page;
+      this.getList();
+    },
+    search() {
+      this.getList();
     }
   }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.user {
+  height: 90%;
+  .user-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .common-table {
+    position: relative;
+    height: calc(100% - 62px);
+    .pager {
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+    }
+  }
+}
 </style>
