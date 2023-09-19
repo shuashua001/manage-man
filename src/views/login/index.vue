@@ -10,7 +10,7 @@
           <el-input v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import Mock from "mockjs";
+import Cookie from "js-cookie";
+
 export default {
   data() {
     return {
@@ -32,6 +35,13 @@ export default {
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
+  },
+  methods: {
+    login() {
+      const token = Mock.Random.guid();
+      Cookie.set("token", token);
+      this.$router.push("/");
+    }
   }
 };
 </script>
@@ -57,7 +67,7 @@ export default {
     width: 198px;
   }
   .el-button {
-    margin: 0 auto;
+    margin-left: 30px;
   }
 }
 </style>
