@@ -2,12 +2,12 @@
   <div>
     <el-card class="login">
       <h3 class="login-title">系统登录</h3>
-      <el-form :model="form" :rules="rules" label-width="70px">
+      <el-form :model="form" :rules="rules" label-width="70px" ref="login">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password"></el-input>
+          <el-input v-model="form.password" type="password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Mock from "mockjs";
 import Cookie from "js-cookie";
+import { getMenu } from "../../api/perssionAPI";
 
 export default {
   data() {
@@ -38,9 +38,19 @@ export default {
   },
   methods: {
     login() {
-      const token = Mock.Random.guid();
-      Cookie.set("token", token);
-      this.$router.push("/");
+      this.$refs.login.validate(success => {
+        if (success) {
+          getMenu(this.form).then(({ data }) => {
+            // console.log(data);
+            if (data.code === 20000) {
+              Cookie.set("token", data.data.token);
+              this.$router.push("/");
+            } else {
+              this.$message.error(data.data.message);
+            }
+          });
+        }
+      });
     }
   }
 };

@@ -11,13 +11,13 @@
       </el-breadcrumb>
     </div>
     <div class="r-head">
-      <el-dropdown>
+      <el-dropdown @command="logout">
         <span class="el-dropdown-link">
           <img src="../assets/images/aaa.png" alt class="img" />
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -25,10 +25,17 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
 export default {
   methods: {
     changeAside() {
       this.$store.commit("changeCollapse");
+    },
+    logout(data) {
+      if (data === "logout") {
+        Cookie.remove("token");
+        this.$router.push("/login");
+      }
     }
   },
   computed: {
