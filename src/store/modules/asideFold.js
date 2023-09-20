@@ -9,7 +9,8 @@ export default{
       icon: "s-home",
       url: "Home/Home"
     }
-  ]
+  ],
+  menuList:[]
   },
   mutations: {
     changeCollapse(state) {
@@ -26,6 +27,9 @@ export default{
     deleteList(state,index) {
       // console.log(data);
       state.tabList.splice(index,1)
+    },
+    setTab(state,tab) {
+      state.menuList = tab
     }
   }
 }
