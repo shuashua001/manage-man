@@ -41,11 +41,12 @@ export default {
       this.$refs.login.validate(success => {
         if (success) {
           getMenu(this.form).then(({ data }) => {
-            console.log(data);
+            // console.log(data);
             if (data.code === 20000) {
               Cookie.set("token", data.data.token);
               Cookie.set("menu", JSON.stringify(data.data.menu));
               this.$store.commit("setTab", data.data.menu);
+              this.$store.commit("addMenu", this.$router);
               this.$router.push("/");
             } else {
               this.$message.error(data.data.message);

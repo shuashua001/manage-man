@@ -13,38 +13,40 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'Main',
+      // redirect: '/home',
       component: Main,
       children: [
-        {
-          path: '/',
-          name: 'home',
-          component: Home
-        },
-        {
-          path: '/user',
-          name: 'user',
-          component: User
-        },
-        {
-          path: '/mall',
-          name: 'mall',
-          component: Mall
-        },
-        {
-          path: '/page1',
-          name: 'page1',
-          component: Page1
-        },
-        {
-          path: '/page2',
-          name: 'page2',
-          component: Page2
-        },
+        // {
+        //   path: '/',
+        //   name: 'home',
+        //   component: Home
+        // },
+        // {
+        //   path: '/user',
+        //   name: 'user',
+        //   component: User
+        // },
+        // {
+        //   path: '/mall',
+        //   name: 'mall',
+        //   component: Mall
+        // },
+        // {
+        //   path: '/page1',
+        //   name: 'page1',
+        //   component: Page1
+        // },
+        // {
+        //   path: '/page2',
+        //   name: 'page2',
+        //   component: Page2
+        // },
       ]
     },
     {
-      path:'/login',
-      name:'login',
+      path: '/login',
+      name: 'login',
       component: Login
     }
   ],
