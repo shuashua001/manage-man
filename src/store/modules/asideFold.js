@@ -51,7 +51,7 @@ export default {
           routeList.push(item)
         }
       })
-      console.log(routeList);
+      // console.log(routeList);
       routeList.forEach(item => {
         router.addRoute('Main', item)
       })

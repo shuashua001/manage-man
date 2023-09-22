@@ -14,11 +14,11 @@ const router = new Router({
     {
       path: '/',
       name: 'Main',
-      // redirect: '/home',
+      redirect: '/home',
       component: Main,
       children: [
         // {
-        //   path: '/',
+        //   path: '/home',
         //   name: 'home',
         //   component: Home
         // },
